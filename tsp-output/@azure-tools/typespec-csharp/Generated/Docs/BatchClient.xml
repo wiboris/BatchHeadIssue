@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="PoolExistsAsync(string,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call PoolExistsAsync.
+<code><![CDATA[
+BatchClient client = new BatchClient();
+
+Response response = await client.PoolExistsAsync("<poolId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call PoolExistsAsync with all parameters.
+<code><![CDATA[
+BatchClient client = new BatchClient();
+
+Response response = await client.PoolExistsAsync("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="PoolExists(string,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call PoolExists.
+<code><![CDATA[
+BatchClient client = new BatchClient();
+
+Response response = client.PoolExists("<poolId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call PoolExists with all parameters.
+<code><![CDATA[
+BatchClient client = new BatchClient();
+
+Response response = client.PoolExists("<poolId>", timeOut: 1234, ocpDate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>

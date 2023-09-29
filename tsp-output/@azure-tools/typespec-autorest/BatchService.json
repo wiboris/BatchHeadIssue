@@ -1,0 +1,225 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Azure Batch",
+    "version": "2023-05-01.17.0",
+    "description": "Azure Batch provides Cloud-scale job scheduling and compute management.",
+    "x-typespec-generated": [
+      {
+        "emitter": "@azure-tools/typespec-autorest"
+      }
+    ]
+  },
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [],
+  "paths": {
+    "/pools/{poolId}": {
+      "head": {
+        "operationId": "Pools_PoolExists",
+        "description": "Gets basic properties of a Pool.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/BatchClientRequestHeaders.timeOut"
+          },
+          {
+            "$ref": "#/parameters/BatchClientRequestHeaders.client-request-id"
+          },
+          {
+            "$ref": "#/parameters/BatchClientRequestHeaders.return-client-request-id"
+          },
+          {
+            "$ref": "#/parameters/BatchClientRequestHeaders.ocp-date"
+          },
+          {
+            "$ref": "#/parameters/BatchPoolHeaders"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A response containing headers related to the Pool, if it exists.",
+            "headers": {
+              "client-request-id": {
+                "type": "string",
+                "description": "The client-request-id provided by the client during the request. This will be returned only if the return-client-request-id parameter was set to true."
+              },
+              "request-id": {
+                "type": "string",
+                "description": "A unique identifier for the request that was made to the Batch service. If a request is consistently failing and you have verified that the request is properly formulated, you may use this value to report the error to Microsoft. In your report, include the value of this request ID, the approximate time that the request was made, the Batch Account against which the request was made, and the region that Account resides in."
+              },
+              "etag": {
+                "type": "string",
+                "description": "The ETag HTTP response header. This is an opaque string. You can use it to detect whether the resource has changed between requests. In particular, you can pass the ETag to one of the If-Modified-Since, If-Unmodified-Since, If-Match or If-None-Match headers."
+              },
+              "last-modified": {
+                "type": "string",
+                "format": "date-time-rfc7231",
+                "description": "The time at which the resource was last modified."
+              }
+            }
+          },
+          "404": {
+            "description": "The server cannot find the requested resource."
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/BatchError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "BatchError": {
+      "type": "object",
+      "description": "An error response received from the Azure Batch service.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "An identifier for the error. Codes are invariant and are intended to be consumed programmatically."
+        },
+        "message": {
+          "$ref": "#/definitions/ErrorMessage",
+          "description": "A message describing the error, intended to be suitable for display in a user interface."
+        },
+        "values": {
+          "type": "array",
+          "description": "A collection of key-value pairs containing additional details about the error.",
+          "items": {
+            "$ref": "#/definitions/BatchErrorDetail"
+          },
+          "x-ms-identifiers": []
+        }
+      },
+      "required": [
+        "code"
+      ]
+    },
+    "BatchErrorDetail": {
+      "type": "object",
+      "description": "An item of additional information included in an Azure Batch error response.",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "An identifier specifying the meaning of the Value property."
+        },
+        "value": {
+          "type": "string",
+          "description": "The additional information included with the error response."
+        }
+      }
+    },
+    "BatchResponseHeaders": {
+      "type": "object",
+      "description": "Client related response header values"
+    },
+    "ErrorMessage": {
+      "type": "object",
+      "description": "An error message received in an Azure Batch error response.",
+      "properties": {
+        "lang": {
+          "type": "string",
+          "description": "The language code of the error message."
+        },
+        "value": {
+          "type": "string",
+          "description": "The text of the message."
+        }
+      }
+    },
+    "PoolDoesExistResponseHeaders": {
+      "type": "object",
+      "description": "A response containing headers related to the Pool, if it exists."
+    },
+    "PoolDoesntExistResponseHeaders": {
+      "type": "object",
+      "description": "The Pool does not exist."
+    },
+    "Versions": {
+      "type": "string",
+      "description": "The Azure Batch service version.",
+      "enum": [
+        "2023-05-01.17.0"
+      ],
+      "x-ms-enum": {
+        "name": "Versions",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "2023-05-01.17.0",
+            "value": "2023-05-01.17.0",
+            "description": "API Version 2023-05-01.17.0"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "Azure.Core.Foundations.ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "description": "The API version to use for this operation.",
+      "required": true,
+      "type": "string",
+      "minLength": 1,
+      "x-ms-parameter-location": "method",
+      "x-ms-client-name": "apiVersion"
+    },
+    "BatchClientRequestHeaders.client-request-id": {
+      "name": "client-request-id",
+      "in": "header",
+      "description": "The caller-generated request identity, in the form of a GUID with no decoration\nsuch as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.",
+      "required": false,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "BatchClientRequestHeaders.ocp-date": {
+      "name": "ocp-date",
+      "in": "header",
+      "description": "The time the request was issued. Client libraries typically set this to the\ncurrent system clock time; set it explicitly if you are calling the REST API\ndirectly.",
+      "required": false,
+      "type": "string",
+      "format": "date-time-rfc7231",
+      "x-ms-parameter-location": "method"
+    },
+    "BatchClientRequestHeaders.return-client-request-id": {
+      "name": "return-client-request-id",
+      "in": "header",
+      "description": "Whether the server should return the client-request-id in the response.",
+      "required": false,
+      "type": "boolean",
+      "default": false,
+      "x-ms-parameter-location": "method"
+    },
+    "BatchClientRequestHeaders.timeOut": {
+      "name": "timeOut",
+      "in": "query",
+      "description": "The maximum number of items to return in the response. A maximum of 1000\napplications can be returned.",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "default": 30,
+      "x-ms-parameter-location": "method"
+    },
+    "BatchPoolHeaders": {
+      "name": "poolId",
+      "in": "path",
+      "description": "The ID of the Pool to get.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    }
+  }
+}
